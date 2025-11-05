@@ -2681,7 +2681,6 @@ window.addEventListener('load', async () => {
     const menuMainMenuBtn = document.getElementById('menu-main-menu-btn');
     const simCombatBtn = document.getElementById('simular-combate-btn'); // Botão de simulação agora está no menu
     const sidebarToggleBtn = document.getElementById('sidebar-toggle');
-    const debugToggleBtn = document.getElementById('debug-toggle-button');
 
     // Adicionando os listeners que estavam faltando
     document.querySelectorAll('.class-card').forEach(card => {
