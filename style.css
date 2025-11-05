@@ -183,8 +183,6 @@ body {
     margin: 1rem;
     border-radius: 12px; /* Bordas mais arredondadas */
 }
-
-.modal-content h2 { 
     color: var(--accent-gold); 
 }
 
