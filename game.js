@@ -2513,17 +2513,6 @@ function displayStatusEffects(targetIsPlayer) {
      }
 }
 
-async function generateWithGemini(prompt) {
-    try {
-        const data = await callAI(NARRATIVE_API_URL, { prompt });
-        if (!data.text) throw new Error('Resposta do Proxy em formato inesperado');
-        console.log('Resposta recebida do Proxy');
-        return data.text;
-    } catch (error) {
-        console.error('Erro ao chamar Proxy API:', error);
-        return getFallbackResponse(prompt);
-    }
-}
 // =============================================
 // NOVO: CARREGAMENTO DE DADOS DO JOGO (JSON)
 // =============================================
@@ -2667,8 +2656,6 @@ window.addEventListener('load', async () => {
     setupModal('bounty-board-modal-button', 'bounty-board-modal', openBountyBoardModal);
     setupModal('travel-modal-button', 'travel-modal', openTravelModal);
     setupModal('bestiary-modal-button', 'bestiary-modal', openBestiaryModal);
-    setupModal('crafting-modal-button', 'crafting-modal', openCraftingModal);
-    // CORREÇÃO: O botão de itens de combate é 'item-btn', não 'combat-items-modal'
     setupModal('item-btn', 'combat-items-modal', openCombatItemsModal);
     document.getElementById('cancel-letter-btn')?.addEventListener('click', closeLetterModal);
     document.getElementById('send-letter-btn')?.addEventListener('click', sendLetter);
