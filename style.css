@@ -885,6 +885,19 @@ body {
     #chat-area {
         padding-bottom: 100px;
     }
+
+    /* OTIMIZAÇÃO PARA CRIAÇÃO DE PERSONAGEM EM MODO RETRATO */
+    #character-setup .creation-section {
+        margin-bottom: 0.75rem; /* Reduz a margem entre seções */
+    }
+
+    /* Agrupa Detalhes e Atributos em uma grade */
+    #character-setup .space-y-4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        align-items: start;
+    }
 }
 
 .input-section {
