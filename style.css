@@ -882,10 +882,10 @@ body {
         border-top: 1px solid var(--primary-light);
         z-index: 40;
     }
-    /* Adiciona um preenchimento na parte inferior do corpo para que a barra não cubra o último chat.
-       A altura pode precisar de ajuste dependendo do tamanho da fonte e do padding do input. */
-    body {
-        padding-bottom: 100px; /* Aumenta o espaço para a barra inferior, garantindo que o último chat seja visível */
+    /* Adiciona um preenchimento na parte inferior da ÁREA DE CHAT para que a barra não cubra a última mensagem.
+       Isso é mais robusto do que aplicar no body. A altura (100px) deve ser suficiente para a barra de input e botões de escolha. */
+    #chat-area {
+        padding-bottom: 100px;
     }
 }
 
@@ -894,4 +894,8 @@ body {
     gap: 0.5rem;
     align-items: center;
     width: 100%;
+}
+
+/* Estilo para o período do dia na sidebar */
+#time-period { font-weight: bold; }
 }
