@@ -879,6 +879,14 @@ body {
     #chat-area {
         padding-bottom: 100px;
     }
+
+    /* CORREÇÃO: Garante que o modal de criação de personagem seja visível no modo retrato */
+    #character-setup.open {
+        display: flex !important;
+    }
+
+    /* CORREÇÃO: Limita a altura do contêiner principal do chat para permitir rolagem interna */
+    main.flex-grow { max-height: 100%; }
 }
 
 .input-section {
@@ -890,4 +898,3 @@ body {
 
 /* Estilo para o período do dia na sidebar */
 #time-period { font-weight: bold; }
-}
