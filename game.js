@@ -2615,6 +2615,11 @@ window.addEventListener('load', async () => {
     // Listeners do Menu Principal e Configurações
     if (newGameBtn) newGameBtn.addEventListener('click', () => {
         startAudioContext();
+        // CORREÇÃO CRÍTICA: Garante que o wrapper do jogo seja exibido ANTES de chamar resetGame.
+        // Isso é essencial para que a tela de criação de personagem seja visível em telas pequenas (modo retrato).
+        const gameWrapper = document.getElementById('game-wrapper');
+        gameWrapper.classList.remove('hidden');
+        gameWrapper.classList.add('flex');
         resetGame();
     });
     if (loadGameBtn) loadGameBtn.addEventListener('click', () => {
