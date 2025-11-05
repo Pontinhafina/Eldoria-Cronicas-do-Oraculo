@@ -1258,113 +1258,56 @@
                         </div>
                     </div>
                     
-                    <div class="space-y-4">
-                        <!-- Nome e Sexo do Personagem (MODIFICADO) -->
-                        <div class="creation-section">
-                            <h3 class="creation-section-title">Detalhes do Personagem</h3>
-                            <div class="space-y-2">
-                                <input type="text" id="char-name-input" placeholder="Ex: Corvo, o Bardo" class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600 text-sm">
-                                <div class="grid grid-cols-1 gap-2"> 
-                                    <!-- Apenas o Sexo (Idade removida) -->
-                                    <select id="char-sex-input" class="p-2 rounded-lg bg-gray-800 text-white border border-gray-600 text-sm">
-                                        <option value="">Escolha o Sexo</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Feminino">Feminino</option>
-                                    </select>
+                    <!-- OTIMIZAÇÃO PARA MOBILE: Grid para Detalhes e Atributos -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+                        <div class="space-y-4">
+                            <!-- Nome e Sexo do Personagem -->
+                            <div class="creation-section">
+                                <h3 class="creation-section-title">Detalhes</h3>
+                                <div class="space-y-2">
+                                    <input type="text" id="char-name-input" placeholder="Ex: Corvo, o Bardo" class="w-full p-2 rounded-lg bg-gray-800 text-white border border-gray-600 text-sm">
+                                    <div class="grid grid-cols-1 gap-2"> 
+                                        <select id="char-sex-input" class="p-2 rounded-lg bg-gray-800 text-white border border-gray-600 text-sm">
+                                            <option value="">Escolha o Sexo</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Feminino">Feminino</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Escolha da Classe (MODIFICADO para imagens) -->
-                        <div class="creation-section">
-                            <h3 class="creation-section-title">Escolha sua Classe</h3>
-                            <!-- NOVO: Área de Descrição da Classe -->
-                            <div id="class-description-area" class="p-2 mb-3 text-center text-sm text-gray-300 bg-primary-dark rounded-lg min-h-[50px]">
-                                <p id="class-description-text" class="italic">Passe o mouse sobre uma classe para ver a descrição.</p>
-                            </div>
-                            <style>
-                                #class-description-area { border: 1px solid rgba(212, 175, 55, 0.2); }
-                            </style>
-                            <div class="class-grid">
-                                <div class="class-card" data-class="Guerreiro">
-                                    <img src="assets/sprites/guerreiro_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Guerreiro">
-                                    <div class="class-name">Guerreiro</div>
-                                    <div class="class-desc">Combate corpo a corpo</div>
-                                </div>
-                                <div class="class-card" data-class="Mago">
-                                    <img src="assets/sprites/mago_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Mago">
-                                    <div class="class-name">Mago</div>
-                                    <div class="class-desc">Artes arcanas</div>
-                                </div>
-                                <div class="class-card" data-class="Arqueiro">
-                                    <img src="assets/sprites/arqueiro_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Arqueiro">
-                                    <div class="class-name">Arqueiro</div>
-                                    <div class="class-desc">Ataques à distância</div>
-                                </div>
-                                <div class="class-card" data-class="Ladino">
-                                    <img src="assets/sprites/ladino_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Ladino">
-                                    <div class="class-name">Ladino</div>
-                                    <div class="class-desc">Furtividade</div>
-                                </div>
-                                <div class="class-card" data-class="Paladino">
-                                    <img src="assets/sprites/paladino_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Paladino">
-                                    <div class="class-name">Paladino</div>
-                                    <div class="class-desc">Poderes divinos</div>
-                                </div>
-                                <div class="class-card" data-class="Bardo">
-                                    <img src="assets/sprites/bardo_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Bardo">
-                                    <div class="class-name">Bardo</div>
-                                    <div class="class-desc">Magia musical</div>
-                                </div>
-                                <div class="class-card" data-class="Druida">
-                                    <img src="assets/sprites/druida_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Druida">
-                                    <div class="class-name">Druida</div>
-                                    <div class="class-desc">Natureza</div>
-                                </div>
-                                <div class="class-card" data-class="Necromante">
-                                    <img src="assets/sprites/necromante_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Necromante">
-                                    <div class="class-name">Necromante</div>
-                                    <div class="class-desc">Artes das trevas</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Distribuição de Atributos (PONTOS REMOVIDOS) -->
-                        <div class="creation-section">
-                            <h3 class="creation-section-title">Atributos do Personagem</h3>
-                            <p class="text-sm text-gray-400 mb-3">Atributos fixados pela classe. Eles guiam o poder das suas ações.</p>
-                            <div class="attributes-grid">
-                                <div class="attribute-card">
-                                    <div class="attribute-name">💪 Força</div>
-                                    <div class="attribute-value" id="create-strength">10</div>
-                                    <div class="attribute-desc">Ataque físico</div>
-                                </div>
-                                <div class="attribute-card">
-                                    <div class="attribute-name">👟 Destreza</div>
-                                    <div class="attribute-value" id="create-dexterity">10</div>
-                                    <div class="attribute-desc">Precisão e agilidade</div>
-                                </div>
-                                <div class="attribute-card">
-                                    <div class="attribute-name">🧱 Constituição</div>
-                                    <div class="attribute-value" id="create-constitution">10</div>
-                                    <div class="attribute-desc">Vida e resistência</div>
-                                </div>
-                                <div class="attribute-card">
-                                    <div class="attribute-name">🧠 Inteligência</div>
-                                    <div class="attribute-value" id="create-intelligence">10</div>
-                                    <div class="attribute-desc">Magia e conhecimento</div>
-                                </div>
-                                <div class="attribute-card">
-                                    <div class="attribute-name">💡 Sabedoria</div>
-                                    <div class="attribute-value" id="create-wisdom">10</div>
-                                    <div class="attribute-desc">Percepção e intuição</div>
-                                </div>
-                                <div class="attribute-card">
-                                    <div class="attribute-name">🗣️ Carisma</div>
-                                    <div class="attribute-value" id="create-charisma">10</div>
-                                    <div class="attribute-desc">Persuasão e liderança</div>
+                            <!-- Distribuição de Atributos -->
+                            <div class="creation-section">
+                                <h3 class="creation-section-title">Atributos</h3>
+                                <p class="text-xs text-gray-400 mb-2">Fixados pela classe.</p>
+                                <div class="attributes-grid">
+                                    <div class="attribute-card"><div class="attribute-name">💪 Força</div><div class="attribute-value" id="create-strength">10</div></div>
+                                    <div class="attribute-card"><div class="attribute-name">👟 Destreza</div><div class="attribute-value" id="create-dexterity">10</div></div>
+                                    <div class="attribute-card"><div class="attribute-name">🧱 Const.</div><div class="attribute-value" id="create-constitution">10</div></div>
+                                    <div class="attribute-card"><div class="attribute-name">🧠 Intel.</div><div class="attribute-value" id="create-intelligence">10</div></div>
+                                    <div class="attribute-card"><div class="attribute-name">💡 Sabed.</div><div class="attribute-value" id="create-wisdom">10</div></div>
+                                    <div class="attribute-card"><div class="attribute-name">🗣️ Carisma</div><div class="attribute-value" id="create-charisma">10</div></div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Escolha da Classe (agora separada) -->
+                    <div class="creation-section mt-4">
+                        <h3 class="creation-section-title">Escolha sua Classe</h3>
+                        <div id="class-description-area" class="p-2 mb-3 text-center text-sm text-gray-300 bg-primary-dark rounded-lg min-h-[50px]">
+                            <p id="class-description-text" class="italic">Passe o mouse sobre uma classe para ver a descrição.</p>
+                        </div>
+                        <style>#class-description-area { border: 1px solid rgba(212, 175, 55, 0.2); }</style>
+                        <div class="class-grid">
+                            <div class="class-card" data-class="Guerreiro"><img src="assets/sprites/guerreiro_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Guerreiro"><div class="class-name">Guerreiro</div><div class="class-desc">Combate corpo a corpo</div></div>
+                            <div class="class-card" data-class="Mago"><img src="assets/sprites/mago_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Mago"><div class="class-name">Mago</div><div class="class-desc">Artes arcanas</div></div>
+                            <div class="class-card" data-class="Arqueiro"><img src="assets/sprites/arqueiro_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Arqueiro"><div class="class-name">Arqueiro</div><div class="class-desc">Ataques à distância</div></div>
+                            <div class="class-card" data-class="Ladino"><img src="assets/sprites/ladino_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Ladino"><div class="class-name">Ladino</div><div class="class-desc">Furtividade</div></div>
+                            <div class="class-card" data-class="Paladino"><img src="assets/sprites/paladino_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Paladino"><div class="class-name">Paladino</div><div class="class-desc">Poderes divinos</div></div>
+                            <div class="class-card" data-class="Bardo"><img src="assets/sprites/bardo_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Bardo"><div class="class-name">Bardo</div><div class="class-desc">Magia musical</div></div>
+                            <div class="class-card" data-class="Druida"><img src="assets/sprites/druida_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Druida"><div class="class-name">Druida</div><div class="class-desc">Natureza</div></div>
+                            <div class="class-card" data-class="Necromante"><img src="assets/sprites/necromante_masculino.png" class="class-icon-img mx-auto mb-1 rounded" alt="Necromante"><div class="class-name">Necromante</div><div class="class-desc">Artes das trevas</div></div>
                         </div>
                     </div>
                     
