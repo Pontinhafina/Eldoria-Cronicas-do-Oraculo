@@ -305,7 +305,9 @@ function saveCharacterProfile() {
     
     skillPoints = 0; // Começa com 0 pontos
     
-    characterSetupModal.style.display = 'none';
+    // CORREÇÃO: Usa classes para controlar a visibilidade, evitando conflitos com CSS.
+    characterSetupModal.classList.remove('open');
+
     document.getElementById('character-name-display').textContent = `${name} (${role})`;
     document.getElementById('sidebar-char-name').textContent = name;
     document.getElementById('sidebar-char-role').textContent = role;
@@ -2202,10 +2204,11 @@ function resetGame() {
         // Reseta o tempo
         gameTime = { day: 1, hour: 8 };
         updateTimeUI();
-        
-        // CORREÇÃO: Em vez de forçar o display, adicionamos uma classe para o CSS controlar a visibilidade.
-        // Isso evita conflitos com as regras de responsividade do CSS.
-        document.getElementById('character-setup').classList.add('open');
+
+        // CORREÇÃO: Usa classes para controlar a visibilidade, evitando conflitos com CSS.
+        const characterSetupModal = document.getElementById('character-setup');
+        characterSetupModal.classList.add('open');
+
         applyClassAttributes('Guerreiro');
         updateClassCardImages();
         updateQuestsUI(); updateRelationshipsUI(); updateEquipmentUI(); updateReputationUI(); updateChatInputStatus(); updateTimeUI(); updateObjectiveTracker();
