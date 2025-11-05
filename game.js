@@ -2571,8 +2571,6 @@ window.addEventListener('load', async () => {
     // Get Elements
     const saveCharBtn = document.getElementById('save-character-button');
     const sendBtn = document.getElementById('send-button');
-    const sidebarToggleBtn = document.getElementById('sidebar-toggle');
-    const simCombatBtn = document.getElementById('simular-combate-btn');
     const attackBtn = document.getElementById('attack-btn');
     const skillBtn = document.getElementById('skill-btn');
     const itemBtn = document.getElementById('item-btn');
@@ -2595,14 +2593,6 @@ window.addEventListener('load', async () => {
     // Attach Listeners
     if (saveCharBtn) saveCharBtn.addEventListener('click', saveCharacterProfile); else console.error("Save button not found!");
     if (sendBtn) sendBtn.addEventListener('click', sendMessage); else console.error("Send button not found!");
-    if (debugToggleBtn) debugToggleBtn.addEventListener('click', toggleDebugPanel);
-    if (simCombatBtn) simCombatBtn.addEventListener('click', () => {
-        if (!localCharacterProfile) { addMessage('❌ Crie um personagem!', 'ai'); return; }
-        const lvl = localCharacterProfile.level; 
-        const enemy = { name: `Simulador Lvl ${lvl}`, level: lvl, maxHP: 80+(lvl*20), currentHP: 80+(lvl*20), statusEffects: [] };
-        addMessage(`⚙️ Iniciando simulação de combate contra ${enemy.name}!`, 'ai', 'spell'); 
-        startCombat(enemy, true);
-    });
     if (attackBtn) attackBtn.addEventListener('click', playerAttack);
     if (skillBtn) skillBtn.addEventListener('click', () => {
         const section = document.getElementById('skills-section'); 
@@ -2646,6 +2636,7 @@ window.addEventListener('load', async () => {
 
     // Função auxiliar para configurar modais
     const setupModal = (buttonId, modalId, openFn = null) => {
+        console.log(`Setting up modal: ${modalId} with button: ${buttonId}`);
         const modal = document.getElementById(modalId);
         if (!modal) return; // NOVO: Sai da função se o modal não existir, evitando erros.
         const openBtn = document.getElementById(buttonId);
@@ -2667,12 +2658,10 @@ window.addEventListener('load', async () => {
     setupModal('bounty-board-modal-button', 'bounty-board-modal', openBountyBoardModal);
     setupModal('travel-modal-button', 'travel-modal', openTravelModal);
     setupModal('bestiary-modal-button', 'bestiary-modal', openBestiaryModal);
-    setupModal('item-btn', 'combat-items-modal', openCombatItemsModal);
     document.getElementById('cancel-letter-btn')?.addEventListener('click', closeLetterModal);
     document.getElementById('send-letter-btn')?.addEventListener('click', sendLetter);
     
     // Listeners que não são de modais
-    if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
     stanceButtons.forEach(btn => btn.addEventListener('click', () => setCombatStance(btn.getAttribute('data-stance'))));
     document.getElementById('difficulty-buttons')?.addEventListener('click', (e) => {
         if (e.target.classList.contains('difficulty-button')) {
@@ -2683,7 +2672,18 @@ window.addEventListener('load', async () => {
     });
 
     // Listeners do NOVO Menu de Jogo
+    const ingameMenuButton = document.getElementById('ingame-menu-button');
+    const gameMenuModal = document.getElementById('game-menu-modal');
+    const closeGameMenuBtn = document.getElementById('close-game-menu-btn');
+    const menuSaveGameBtn = document.getElementById('menu-save-game-btn');
+    const menuLoadGameBtn = document.getElementById('menu-load-game-btn');
+    const menuSettingsBtn = document.getElementById('menu-settings-btn');
+    const menuMainMenuBtn = document.getElementById('menu-main-menu-btn');
+    const simCombatBtn = document.getElementById('simular-combate-btn'); // Botão de simulação agora está no menu
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle');
+    const debugToggleBtn = document.getElementById('debug-toggle-button');
 
+    // Adicionando os listeners que estavam faltando
     document.querySelectorAll('.class-card').forEach(card => {
         card.addEventListener('click', () => {
             startAudioContext();
@@ -2710,6 +2710,23 @@ window.addEventListener('load', async () => {
         });
     });
 
+    if (ingameMenuButton) ingameMenuButton.addEventListener('click', () => gameMenuModal.classList.remove('hidden'));
+    if (closeGameMenuBtn) closeGameMenuBtn.addEventListener('click', () => gameMenuModal.classList.add('hidden'));
+    if (menuSaveGameBtn) menuSaveGameBtn.addEventListener('click', saveGame);
+    if (menuLoadGameBtn) menuLoadGameBtn.addEventListener('click', () => {
+        if (!loadGame()) alert("Nenhum jogo salvo encontrado.");
+        gameMenuModal.classList.add('hidden');
+    });
+    if (menuSettingsBtn) menuSettingsBtn.addEventListener('click', () => document.getElementById('settings-modal').classList.remove('hidden'));
+    if (menuMainMenuBtn) menuMainMenuBtn.addEventListener('click', () => window.location.reload());
+    if (simCombatBtn) simCombatBtn.addEventListener('click', () => {
+        if (!localCharacterProfile) { addMessage('❌ Crie um personagem!', 'ai'); return; }
+        const lvl = localCharacterProfile.level; 
+        const enemy = { name: `Simulador Lvl ${lvl}`, level: lvl, maxHP: 80+(lvl*20), currentHP: 80+(lvl*20), statusEffects: [] };
+        addMessage(`⚙️ Iniciando simulação de combate contra ${enemy.name}!`, 'ai', 'spell'); 
+        startCombat(enemy, true);
+        gameMenuModal.classList.add('hidden');
+    });
 
     if (worldActionsButton) {
         worldActionsButton.addEventListener('click', (e) => {
@@ -2723,6 +2740,9 @@ window.addEventListener('load', async () => {
             worldActionsDropdown.classList.add('hidden');
         }
     });
+
+    if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('open'));
+    if (debugToggleBtn) debugToggleBtn.addEventListener('click', toggleDebugPanel);
 
     function initializeGame() {
         // Carrega configurações salvas
