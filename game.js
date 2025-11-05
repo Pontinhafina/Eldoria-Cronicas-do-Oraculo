@@ -43,18 +43,6 @@ async function callAI(apiUrl, payload) {
     }
 }
 
-async function generateWithGemini(prompt) {
-    try {
-        const data = await callAI(NARRATIVE_API_URL, { prompt });
-        if (!data.text) throw new Error('Resposta do Proxy em formato inesperado');
-        console.log('Resposta recebida do Proxy');
-        return data.text;
-    } catch (error) {
-        console.error('Erro ao chamar Proxy API:', error);
-        return getFallbackResponse(prompt);
-    }
-}
-
 function getFallbackResponse(prompt) {
      const lowerPrompt = prompt.toLowerCase();
      const commonResponses = ["A ação tem consequências...", "O mundo reage...", "Um novo caminho se abre...", "O silêncio é a única resposta por enquanto."];
@@ -716,7 +704,7 @@ D. [Quarta Escolha - Algo mais arriscado ou criativo]
     
     try {
         const response = await generateWithGemini(prompt);
-        chatArea.removeChild(loadingDiv);
+        if (chatArea.contains(loadingDiv)) chatArea.removeChild(loadingDiv);
         const processedResponse = processAIResponseForGameChanges(response); // Processa a resposta
         addMessage(processedResponse, 'ai');
     } catch (error) {
@@ -2525,6 +2513,17 @@ function displayStatusEffects(targetIsPlayer) {
      }
 }
 
+async function generateWithGemini(prompt) {
+    try {
+        const data = await callAI(NARRATIVE_API_URL, { prompt });
+        if (!data.text) throw new Error('Resposta do Proxy em formato inesperado');
+        console.log('Resposta recebida do Proxy');
+        return data.text;
+    } catch (error) {
+        console.error('Erro ao chamar Proxy API:', error);
+        return getFallbackResponse(prompt);
+    }
+}
 // =============================================
 // NOVO: CARREGAMENTO DE DADOS DO JOGO (JSON)
 // =============================================
