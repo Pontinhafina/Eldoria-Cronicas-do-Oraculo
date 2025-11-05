@@ -50,9 +50,10 @@ body {
 #chat-area { 
     background-color: #1e1a1a;
     color: var(--text-light); 
-    border: 2px solid #3a2e2a;
+    border: 2px solid #3a2e2a; 
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-    height: 60vh; /* ALTURA FIXA PARA TESTE */
+    /* REMOVIDO: Altura fixa que quebrava o layout no celular. */
+    /* height: 60vh; */
 }
 
 
@@ -170,8 +171,14 @@ body {
 }
 
 /* Modal styling */
-#character-setup, #skills-modal, #relationships-modal, #quests-modal, #attributes-modal, #music-modal, #combat-items-modal { 
+/* CORREÇÃO: Esconde todos os modais por padrão */
+.modal-container, #character-setup {
+    display: none;
     z-index: 70; 
+}
+/* CORREÇÃO: Mostra o modal quando a classe 'open' ou 'flex' (para compatibilidade) é adicionada pelo JS */
+.modal-container.flex, #character-setup.open {
+    display: flex;
 }
 
 .modal-content { 
@@ -182,8 +189,6 @@ body {
     overflow-y: auto;
     margin: 1rem;
     border-radius: 12px; /* Bordas mais arredondadas */
-}
-    color: var(--accent-gold); 
 }
 
 /* Sidebar styling */
@@ -285,11 +290,6 @@ body {
     background-color: var(--primary-medium);
     border-color: var(--accent-gold);
     transform: translateY(-1px); /* Efeito dinâmico */
-}
-
-/* NOVO: Efeito de pulso para o botão de Ações no Mundo */
-#world-actions-button {
-    animation: pulse-blue 3s infinite;
 }
 
 .dropdown-menu {
@@ -853,12 +853,6 @@ body {
     transition: width 0.5s ease;
 }
 
-@keyframes pulse-blue {
-    0% { box-shadow: 0 0 0 0 rgba(30, 144, 255, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(30, 144, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(30, 144, 255, 0); }
-}
-
 /* ============================================= */
 /* NOVA BARRA DE AÇÕES INFERIOR (MOBILE-FIRST)   */
 /* ============================================= */
@@ -884,19 +878,6 @@ body {
        Isso é mais robusto do que aplicar no body. A altura (100px) deve ser suficiente para a barra de input e botões de escolha. */
     #chat-area {
         padding-bottom: 100px;
-    }
-
-    /* OTIMIZAÇÃO PARA CRIAÇÃO DE PERSONAGEM EM MODO RETRATO */
-    #character-setup .creation-section {
-        margin-bottom: 0.75rem; /* Reduz a margem entre seções */
-    }
-
-    /* Agrupa Detalhes e Atributos em uma grade */
-    #character-setup .space-y-4 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
-        align-items: start;
     }
 }
 
