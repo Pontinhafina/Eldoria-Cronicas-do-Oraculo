@@ -1,27 +1,51 @@
 console.log("Eldoria Script Start"); // Log inicial
 
 // =============================================
-// CONFIGURAÇÃO DA API GEMINI (PROXY)
+// CONFIGURAÇÃO DAS APIS DE IA (PROXY)
+// NOTA IMPORTANTE PARA O DESENVOLVEDOR:
+// As URLs abaixo são os endpoints para as IAs que controlam o jogo.
+// - A IA NARRATIVA cuida da história, descrições e diálogos.
+// - A IA DE REGRAS cuida da lógica do jogo, eventos e mecânicas.
+// ESTAS CHAMADAS DE API SÃO ESSENCIAIS E NÃO DEVEM SER REMOVIDAS.
 // =============================================
-const PROXY_API_URL = 'https://eldoria-api-proxy.davidbrunopatriota205.workers.dev'; // URL CORRETA
+const NARRATIVE_API_URL = 'https://eldoria-api-proxy.davidbrunopatriota205.workers.dev';
+const RULES_API_URL = 'https://eldoria-mestre-regras.davidbrunopatriota205.workers.dev';
 
 let geminiDebounceTimer = null; // NOVO: Timer para debounce
 let isApiOnCooldown = false; // NOVO: Flag para cooldown da API
 
-async function generateWithGemini(prompt) {
+/**
+ * Função genérica para chamar uma das APIs de IA.
+ * @param {string} apiUrl - A URL da API a ser chamada (NARRATIVE_API_URL ou RULES_API_URL).
+ * @param {object} payload - O corpo da requisição a ser enviado como JSON.
+ * @returns {Promise<object>} - A resposta da API em formato JSON.
+ */
+async function callAI(apiUrl, payload) {
     try {
-        console.log('Enviando prompt para o Proxy:', prompt.substring(0, 100) + '...');
-        const response = await fetch(PROXY_API_URL, {
+        console.log(`Enviando para ${apiUrl.includes('regras') ? 'IA de Regras' : 'IA Narrativa'}:`, payload);
+        const response = await fetch(apiUrl, {
             method: 'POST', 
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: prompt })
+            body: JSON.stringify(payload)
         });
         if (!response.ok) {
             const errorBody = await response.text();
             console.error(`Erro no Proxy: ${response.status}`, errorBody);
-            throw new Error(`Erro no Proxy: ${response.status}`);
+            throw new Error(`Erro na API: ${response.status}`);
         }
         const data = await response.json();
+        console.log(`Resposta recebida de ${apiUrl.includes('regras') ? 'IA de Regras' : 'IA Narrativa'}`);
+        return data;
+    } catch (error) {
+        console.error(`Erro ao chamar a API ${apiUrl}:`, error);
+        // Retorna uma estrutura de erro padronizada
+        return { error: true, message: getFallbackResponse(JSON.stringify(payload)) };
+    }
+}
+
+async function generateWithGemini(prompt) {
+    try {
+        const data = await callAI(NARRATIVE_API_URL, { prompt });
         if (!data.text) throw new Error('Resposta do Proxy em formato inesperado');
         console.log('Resposta recebida do Proxy');
         return data.text;
