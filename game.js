@@ -2513,6 +2513,17 @@ function displayStatusEffects(targetIsPlayer) {
      }
 }
 
+async function generateWithGemini(prompt) {
+    try {
+        const data = await callAI(NARRATIVE_API_URL, { prompt });
+        if (!data.text) throw new Error('Resposta do Proxy em formato inesperado');
+        console.log('Resposta recebida do Proxy');
+        return data.text;
+    } catch (error) {
+        console.error('Erro ao chamar Proxy API:', error);
+        return getFallbackResponse(prompt);
+    }
+}
 // =============================================
 // NOVO: CARREGAMENTO DE DADOS DO JOGO (JSON)
 // =============================================
