@@ -2203,7 +2203,9 @@ function resetGame() {
         gameTime = { day: 1, hour: 8 };
         updateTimeUI();
         
-        document.getElementById('character-setup').style.display = 'flex';
+        // CORREÇÃO: Em vez de forçar o display, adicionamos uma classe para o CSS controlar a visibilidade.
+        // Isso evita conflitos com as regras de responsividade do CSS.
+        document.getElementById('character-setup').classList.add('open');
         applyClassAttributes('Guerreiro');
         updateClassCardImages();
         updateQuestsUI(); updateRelationshipsUI(); updateEquipmentUI(); updateReputationUI(); updateChatInputStatus(); updateTimeUI(); updateObjectiveTracker();
